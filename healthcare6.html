@@ -1,0 +1,2480 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Healthcare Appointment System</title>
+
+
+
+    <style>
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+            font-family: Arial, sans-serif;
+
+        }
+
+
+
+        body {
+
+            background: #f0f7f9;
+
+            color: #333;
+
+        }
+
+
+
+        /* ================= LOGIN PAGE ================= */
+
+
+
+        #loginPage {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #087f8c;
+
+        }
+
+
+
+        .login-box {
+
+            width: 380px;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 5px 20px #00000030;
+
+            text-align: center;
+
+        }
+
+
+
+        .login-box h1 {
+
+            color: #087f8c;
+
+            margin-bottom: 10px;
+
+        }
+
+
+
+        .login-box p {
+
+            color: #666;
+
+            margin-bottom: 25px;
+
+        }
+
+
+
+        .login-box label {
+
+            display: block;
+
+            text-align: left;
+
+            font-weight: bold;
+
+            margin-top: 12px;
+
+        }
+
+
+
+        .login-box input {
+
+            width: 100%;
+
+            padding: 12px;
+
+            margin: 8px 0;
+
+            border: 1px solid #ccc;
+
+            border-radius: 5px;
+
+        }
+
+
+
+        .login-btn {
+
+            width: 100%;
+
+            background: #087f8c;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            margin-top: 15px;
+
+        }
+
+
+
+        .login-btn:hover {
+
+            background: #05636e;
+
+        }
+
+
+
+        #loginMessage {
+
+            color: #d9534f;
+
+            margin-top: 15px;
+
+            font-weight: bold;
+
+        }
+
+
+
+        .demo-login {
+
+            margin-top: 20px;
+
+            font-size: 14px;
+
+            color: #666;
+
+        }
+
+
+
+
+
+        .role-selection {
+            margin: 18px 0 22px;
+            padding: 15px;
+            background: #f0f7f9;
+            border-radius: 8px;
+        }
+        .role-selection h3 {
+            color: #087f8c;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+        .role-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .role-btn {
+            flex: 1;
+            padding: 11px 8px;
+            border: 2px solid #087f8c;
+            border-radius: 6px;
+            background: white;
+            color: #087f8c;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .role-btn.selected {
+            background: #087f8c;
+            color: white;
+        }
+        #selectedRoleText {
+            margin: 10px 0 0;
+            font-size: 13px;
+            color: #05636e;
+        }
+
+        .auth-switch {
+            margin-top: 18px;
+            font-size: 14px;
+        }
+        .auth-switch button {
+            background: none;
+            border: none;
+            color: #087f8c;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        #signupPage { 
+            min-height: 100vh;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: #087f8c;
+            padding: 20px;
+        }
+        #signupMessage { margin-top: 12px; font-weight: bold; }
+
+        /* ================= MAIN SYSTEM ================= */
+
+
+
+        #mainSystem {
+
+            display: none;
+
+        }
+
+
+
+        header {
+
+            background: #087f8c;
+
+            color: white;
+
+            padding: 25px;
+
+            text-align: center;
+
+        }
+
+
+
+        header p {
+
+            margin-top: 8px;
+
+        }
+
+
+
+        nav {
+
+            background: #05636e;
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            padding: 12px;
+
+        }
+
+
+
+        nav button {
+
+            background: white;
+
+            color: #05636e;
+
+            border: none;
+
+            padding: 12px 18px;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+        }
+
+
+
+        nav button:hover {
+
+            background: #c8f1f2;
+
+        }
+
+
+
+        .logout-btn {
+
+            background: #d9534f !important;
+
+            color: white !important;
+
+        }
+
+
+
+        .container {
+
+            max-width: 900px;
+
+            margin: 25px auto;
+
+            padding: 20px;
+
+        }
+
+
+
+        .module {
+
+            display: none;
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 3px 10px #00000015;
+
+        }
+
+
+
+        .module.active {
+
+            display: block;
+
+        }
+
+
+
+        h2 {
+
+            color: #087f8c;
+
+            margin-bottom: 20px;
+
+        }
+
+
+
+        input,
+
+        select {
+
+            width: 100%;
+
+            padding: 12px;
+
+            margin: 8px 0 15px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 5px;
+
+        }
+
+
+
+        label {
+
+            font-weight: bold;
+
+        }
+
+
+
+        .main-btn {
+
+            background: #087f8c;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 20px;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+        }
+
+
+
+        .main-btn:hover {
+
+            background: #05636e;
+
+        }
+
+
+
+        .appointment {
+
+            border: 1px solid #ddd;
+
+            border-left: 5px solid #087f8c;
+
+            padding: 15px;
+
+            margin-bottom: 15px;
+
+            border-radius: 6px;
+
+            background: #fbfefe;
+
+        }
+
+
+
+        .appointment p {
+
+            margin: 7px 0;
+
+        }
+
+
+
+        .action-btn {
+
+            padding: 8px 12px;
+
+            margin: 8px 5px 0 0;
+
+            border: none;
+
+            border-radius: 4px;
+
+            cursor: pointer;
+
+            color: white;
+
+        }
+
+
+
+        .reschedule {
+
+            background: #e69b16;
+
+        }
+
+
+
+        .cancel {
+
+            background: #d9534f;
+
+        }
+
+
+
+        .status {
+
+            color: #087f8c;
+
+            font-weight: bold;
+
+        }
+
+
+
+        .empty {
+
+            color: #777;
+
+            padding: 10px 0;
+
+        }
+
+
+
+        footer {
+
+            text-align: center;
+
+            padding: 20px;
+
+            color: #666;
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+
+
+<!-- ================= LOGIN PAGE ================= -->
+
+
+
+<div id="loginPage">
+
+
+
+    <div class="login-box">
+
+
+
+        <h1>Healthcare Login</h1>
+
+
+
+        <p>Login to manage your appointments</p>
+
+
+
+        <div class="role-selection">
+            <h3>Select Your Role</h3>
+            <div class="role-buttons">
+                <button type="button" class="role-btn selected"
+                        onclick="selectRole('user', this)">&#128100; User</button>
+                <button type="button" class="role-btn"
+                        onclick="selectRole('admin', this)">&#128737; Admin</button>
+            </div>
+            <p id="selectedRoleText">Logging in as User</p>
+        </div>
+
+        <form id="loginForm">
+
+
+
+            <label>Username</label>
+
+            <input
+
+                type="text"
+
+                id="username"
+
+                placeholder="Enter username"
+
+                required
+
+            >
+
+
+
+            <label>Password</label>
+
+            <input
+
+                type="password"
+
+                id="password"
+
+                placeholder="Enter password"
+
+                required
+
+            >
+
+
+
+            <button type="submit" class="login-btn">
+
+                Login
+
+            </button>
+
+
+
+        </form>
+
+
+
+        <p id="loginMessage"></p>
+
+
+
+        <div class="auth-switch">Don't have an account?
+            <button type="button" onclick="showSignup()">Sign Up</button>
+        </div>
+
+        <div class="demo-login">
+
+            <b>Demo Login</b><br>
+
+            Username: admin<br>
+
+            Password: 1234
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- ================= SIGNUP PAGE ================= -->
+<div id="signupPage">
+    <div class="login-box">
+        <h1>Create Account</h1>
+        <p>Sign up to manage your healthcare appointments</p>
+        <form id="signupForm">
+            <label for="signupName">Full Name</label>
+            <input type="text" id="signupName" placeholder="Enter your full name" required>
+
+            <label for="signupEmail">Email</label>
+            <input type="email" id="signupEmail" placeholder="Enter your email" required>
+
+            <label for="signupUsername">Username</label>
+            <input type="text" id="signupUsername" placeholder="Choose a username" minlength="3" required>
+
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" placeholder="Create a password (min. 6 characters)" minlength="6" required>
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" placeholder="Re-enter your password" minlength="6" required>
+
+            <button type="submit" class="login-btn">Sign Up</button>
+        </form>
+        <p id="signupMessage" role="status"></p>
+        <div class="auth-switch">Already have an account?
+            <button type="button" onclick="showLogin()">Login</button>
+        </div>
+    </div>
+</div>
+
+<!-- ================= MAIN SYSTEM ================= -->
+
+
+
+<div id="mainSystem">
+
+
+
+    <header>
+
+        <h1>Healthcare Appointment System</h1>
+
+        <p>Your health is our priority. Book and manage appointments easily.</p>
+
+    </header>
+
+
+
+
+
+    <nav>
+
+
+
+        <button onclick="showModule('book')">
+
+            Book Appointment
+
+        </button>
+
+
+
+        <button onclick="showModule('manage')">
+
+            Manage Appointments
+
+        </button>
+
+
+
+        <button onclick="showModule('previous')">
+
+            Previous Appointments
+
+        </button>
+
+
+
+        <button class="logout-btn" onclick="logout()">
+
+            Logout
+
+        </button>
+
+
+
+    </nav>
+
+
+
+
+
+    <div class="container">
+
+
+
+        <!-- ================= MODULE 1 ================= -->
+
+
+
+        <section id="book" class="module active">
+
+
+
+            <h2>Book Appointment</h2>
+
+
+
+            <form id="appointmentForm">
+
+
+
+                <label>Patient Name</label>
+
+
+
+                <input
+
+                    type="text"
+
+                    id="patientName"
+
+                    placeholder="Enter patient name"
+
+                    required
+
+                >
+
+
+
+
+
+                <label>Age</label>
+
+
+
+                <input
+
+                    type="number"
+
+                    id="age"
+
+                    placeholder="Enter age"
+
+                    min="1"
+
+                    max="120"
+
+                    required
+
+                >
+
+
+
+
+
+                <label>Doctor</label>
+
+
+
+                <select id="doctor" required>
+
+
+
+                    <option value="">
+
+                        Select Doctor
+
+                    </option>
+
+
+
+                    <option>
+
+                        Dr. Ravi - Cardiologist
+
+                    </option>
+
+
+
+                    <option>
+
+                        Dr. Priya - Dermatologist
+
+                    </option>
+
+
+
+                    <option>
+
+                        Dr. Kumar - General Physician
+
+                    </option>
+
+
+
+                    <option>
+
+                        Dr. Sneha - Pediatrician
+
+                    </option>
+
+
+
+                </select>
+
+
+
+
+
+                <label>Appointment Date</label>
+
+
+
+                <input
+
+                    type="date"
+
+                    id="date"
+
+                    required
+
+                >
+
+
+
+
+
+                <label>Appointment Time</label>
+
+
+
+                <input
+
+                    type="time"
+
+                    id="time"
+
+                    required
+
+                >
+
+
+
+
+
+                <button
+
+                    type="submit"
+
+                    class="main-btn"
+
+                >
+
+                    Book Appointment
+
+                </button>
+
+
+
+            </form>
+
+
+
+            <p id="bookingMessage"></p>
+
+
+
+        </section>
+
+
+
+
+
+        <!-- ================= MODULE 2 ================= -->
+
+
+
+        <section id="manage" class="module">
+
+
+
+            <h2>Manage Appointments</h2>
+
+
+
+            <div id="upcomingList"></div>
+
+
+
+        </section>
+
+
+
+
+
+        <!-- ================= MODULE 3 ================= -->
+
+
+
+        <section id="previous" class="module">
+
+
+
+            <h2>Previous Appointments</h2>
+
+
+
+            <div id="previousList"></div>
+
+
+
+        </section>
+
+
+
+    </div>
+
+
+
+
+
+    <footer>
+
+
+
+        <p>
+
+            Healthcare Appointment System |
+
+            Patient Care Made Easy
+
+        </p>
+
+
+
+    </footer>
+
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+
+    /* =================================================
+       LOGIN AND SIGNUP SYSTEM
+       Demo login: admin / 1234
+    ================================================= */
+
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+
+    let selectedRole = "user";
+    let currentUser = null;
+
+    function selectRole(role, button) {
+        selectedRole = role;
+        document.querySelectorAll(".role-btn").forEach(btn => {
+            btn.classList.remove("selected");
+        });
+        button.classList.add("selected");
+        document.getElementById("selectedRoleText").textContent =
+            "Logging in as " + (role === "admin" ? "Admin" : "User");
+        document.getElementById("loginMessage").textContent = "";
+    }
+
+
+    // Store demo and registered users in this browser.
+    function getUsers() {
+        return JSON.parse(localStorage.getItem("healthcareUsers") || "[]");
+    }
+
+    function showLogin() {
+        document.getElementById("signupPage").style.display = "none";
+        document.getElementById("mainSystem").style.display = "none";
+        document.getElementById("loginPage").style.display = "flex";
+        document.getElementById("loginMessage").textContent = "";
+    }
+
+    function showSignup() {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("mainSystem").style.display = "none";
+        document.getElementById("signupPage").style.display = "flex";
+        document.getElementById("signupMessage").textContent = "";
+    }
+
+    signupForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("signupName").value.trim();
+        const email = document.getElementById("signupEmail").value.trim().toLowerCase();
+        const username = document.getElementById("signupUsername").value.trim();
+        const password = document.getElementById("signupPassword").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+        const message = document.getElementById("signupMessage");
+
+        if (password !== confirmPassword) {
+            message.style.color = "#d9534f";
+            message.textContent = "Passwords do not match.";
+            return;
+        }
+
+        const users = getUsers();
+        const exists = users.some(user =>
+            user.username.toLowerCase() === username.toLowerCase() ||
+            user.email === email
+        );
+
+        if (username.toLowerCase() === "admin" || exists) {
+            message.style.color = "#d9534f";
+            message.textContent = "That username or email is already registered.";
+            return;
+        }
+
+        users.push({ name, email, username, password, role: "user" });
+        localStorage.setItem("healthcareUsers", JSON.stringify(users));
+
+        message.style.color = "#087f8c";
+        message.textContent = "Account created successfully. You can now log in.";
+        signupForm.reset();
+    });
+
+    loginForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value;
+        const registeredUsers = getUsers();
+
+        const isAdmin = selectedRole === "admin" &&
+                        username.toLowerCase() === "admin" &&
+                        password === "1234";
+
+        const registeredUser = selectedRole === "user"
+            ? registeredUsers.find(user =>
+                user.username.toLowerCase() === username.toLowerCase() &&
+                user.password === password
+              )
+            : null;
+
+        if (isAdmin || registeredUser) {
+            currentUser = isAdmin
+                ? { name: "Administrator", username: "admin", role: "admin" }
+                : { ...registeredUser, role: "user" };
+
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("signupPage").style.display = "none";
+            document.getElementById("mainSystem").style.display = "block";
+            document.getElementById("loginMessage").textContent = "";
+
+            document.querySelector("header p").textContent =
+                "Welcome, " + currentUser.name +
+                " | Role: " + currentUser.role.toUpperCase();
+
+            document.getElementById("patientName").value =
+                currentUser.role === "user" ? currentUser.name : "";
+
+            displayAppointments();
+        } else {
+            document.getElementById("loginMessage").textContent =
+                selectedRole === "admin"
+                    ? "Invalid admin credentials!"
+                    : "Invalid user username or password!";
+        }
+    });
+
+    /* =================================================
+
+       LOGOUT
+
+    ================================================= */
+
+
+
+    function logout() {
+
+
+
+        const confirmLogout =
+
+            confirm("Are you sure you want to logout?");
+
+
+
+        if (confirmLogout) {
+
+            currentUser = null;
+
+
+
+            document.getElementById("mainSystem")
+
+                .style.display = "none";
+
+
+
+            document.getElementById("loginPage")
+
+                .style.display = "flex";
+
+
+
+            document.getElementById("loginForm").reset();
+
+
+
+        }
+
+
+
+    }
+
+
+
+
+
+    /* =================================================
+
+       APPOINTMENT STORAGE
+
+    ================================================= */
+
+
+
+    let appointments =
+
+        JSON.parse(
+
+            localStorage.getItem("appointments")
+
+        ) || [];
+
+
+
+
+
+    const dateInput =
+
+        document.getElementById("date");
+
+
+
+
+
+    /* =================================================
+
+       SET MINIMUM DATE TO TODAY
+
+    ================================================= */
+
+
+
+    const today = new Date();
+
+
+
+    const todayString =
+
+        today.getFullYear() + "-" +
+
+        String(today.getMonth() + 1).padStart(2, "0") +
+
+        "-" +
+
+        String(today.getDate()).padStart(2, "0");
+
+
+
+    dateInput.min = todayString;
+
+
+
+
+
+    /* =================================================
+
+       SWITCH BETWEEN MODULES
+
+    ================================================= */
+
+
+
+    function showModule(moduleId) {
+
+
+
+        document
+
+            .querySelectorAll(".module")
+
+            .forEach(module => {
+
+
+
+                module.classList.remove("active");
+
+
+
+            });
+
+
+
+
+
+        document
+
+            .getElementById(moduleId)
+
+            .classList.add("active");
+
+
+
+
+
+        displayAppointments();
+
+
+
+    }
+
+
+
+
+
+    /* =================================================
+
+       SAVE APPOINTMENTS
+
+    ================================================= */
+
+
+
+    function saveAppointments() {
+
+
+
+        localStorage.setItem(
+
+            "appointments",
+
+            JSON.stringify(appointments)
+
+        );
+
+
+
+    }
+
+
+
+
+
+    /* =================================================
+
+       MODULE 1: BOOK APPOINTMENT
+
+    ================================================= */
+
+
+
+    document
+
+        .getElementById("appointmentForm")
+
+        .addEventListener(
+
+            "submit",
+
+            function(event) {
+
+
+
+                event.preventDefault();
+
+
+
+
+
+                const name =
+
+                    document
+
+                        .getElementById("patientName")
+
+                        .value
+
+                        .trim();
+
+
+
+
+
+                const age =
+
+                    document
+
+                        .getElementById("age")
+
+                        .value;
+
+
+
+
+
+                const doctor =
+
+                    document
+
+                        .getElementById("doctor")
+
+                        .value;
+
+
+
+
+
+                const date =
+
+                    document
+
+                        .getElementById("date")
+
+                        .value;
+
+
+
+
+
+                const time =
+
+                    document
+
+                        .getElementById("time")
+
+                        .value;
+
+
+
+
+
+                const appointmentDate =
+
+                    new Date(
+
+                        date + "T" + time
+
+                    );
+
+
+
+
+
+                const now = new Date();
+
+
+
+
+
+                /* Check future date and time */
+
+
+
+                if (appointmentDate <= now) {
+
+
+
+                    alert(
+
+                        "Please select a future date and time."
+
+                    );
+
+
+
+                    return;
+
+
+
+                }
+
+
+
+
+
+                /* Prevent double booking */
+
+
+
+                const alreadyBooked =
+
+                    appointments.some(a =>
+
+
+
+                        a.doctor === doctor &&
+
+                        a.date === date &&
+
+                        a.time === time &&
+
+                        a.status === "Booked"
+
+
+
+                    );
+
+
+
+
+
+                if (alreadyBooked) {
+
+
+
+                    alert(
+
+                        "This doctor already has an appointment at that time."
+
+                    );
+
+
+
+                    return;
+
+
+
+                }
+
+
+
+
+
+                /* Create appointment */
+
+
+
+                const appointment = {
+
+
+
+                    id: Date.now(),
+
+                    userId: currentUser ? currentUser.username : "",
+
+
+
+                    name: name,
+
+
+
+                    age: age,
+
+
+
+                    doctor: doctor,
+
+
+
+                    date: date,
+
+
+
+                    time: time,
+
+
+
+                    status: "Booked"
+
+
+
+                };
+
+
+
+
+
+                appointments.push(appointment);
+
+
+
+
+
+                saveAppointments();
+
+
+
+
+
+                document
+
+                    .getElementById("bookingMessage")
+
+                    .innerHTML =
+
+                    "<p class='status'>" +
+
+                    "Appointment booked successfully!" +
+
+                    "</p>";
+
+
+
+
+
+                alert(
+
+                    "Appointment booked successfully!"
+
+                );
+
+
+
+
+
+                this.reset();
+
+
+
+
+
+                displayAppointments();
+
+
+
+            }
+
+        );
+
+
+
+
+
+    /* =================================================
+
+       MODULE 2 & MODULE 3:
+
+       DISPLAY APPOINTMENTS
+
+    ================================================= */
+
+
+
+    function displayAppointments() {
+
+
+
+        const upcomingList =
+
+            document.getElementById(
+
+                "upcomingList"
+
+            );
+
+
+
+
+
+        const previousList =
+
+            document.getElementById(
+
+                "previousList"
+
+            );
+
+
+
+
+
+        upcomingList.innerHTML = "";
+
+
+
+        previousList.innerHTML = "";
+
+
+
+
+
+        const now = new Date();
+
+
+
+
+
+        const visibleAppointments = !currentUser || currentUser.role === "admin"
+            ? appointments
+            : appointments.filter(a => a.userId === currentUser.username);
+
+        visibleAppointments.forEach(
+
+            appointment => {
+
+
+
+                const appointmentDate =
+
+                    new Date(
+
+                        appointment.date +
+
+                        "T" +
+
+                        appointment.time
+
+                    );
+
+
+
+
+
+                /* Automatically mark completed */
+
+
+
+                if (
+
+                    appointment.status === "Booked" &&
+
+                    appointmentDate <= now
+
+                ) {
+
+
+
+                    appointment.status =
+
+                        "Completed";
+
+
+
+                }
+
+
+
+
+
+                const card =
+
+                    document.createElement("div");
+
+
+
+
+
+                card.className =
+
+                    "appointment";
+
+
+
+
+
+                const details =
+
+                    document.createElement("div");
+
+
+
+
+
+                function addLine(text) {
+
+
+
+                    const p =
+
+                        document.createElement("p");
+
+
+
+                    p.textContent = text;
+
+
+
+                    details.appendChild(p);
+
+
+
+                }
+
+
+
+
+
+                addLine(
+
+                    "Patient: " +
+
+                    appointment.name
+
+                );
+
+
+
+
+
+                addLine(
+
+                    "Age: " +
+
+                    appointment.age
+
+                );
+
+
+
+
+
+                addLine(
+
+                    "Doctor: " +
+
+                    appointment.doctor
+
+                );
+
+
+
+
+
+                addLine(
+
+                    "Date: " +
+
+                    appointment.date
+
+                );
+
+
+
+
+
+                addLine(
+
+                    "Time: " +
+
+                    appointment.time
+
+                );
+
+
+
+
+
+                addLine(
+
+                    "Status: " +
+
+                    appointment.status
+
+                );
+
+
+
+
+
+                card.appendChild(details);
+
+
+
+
+
+                /* =====================================
+
+                   UPCOMING APPOINTMENTS
+
+                ===================================== */
+
+
+
+                if (
+
+                    appointment.status === "Booked"
+
+                ) {
+
+
+
+                    /* Reschedule Button */
+
+
+
+                    const rescheduleBtn =
+
+                        document.createElement(
+
+                            "button"
+
+                        );
+
+
+
+
+
+                    rescheduleBtn.textContent =
+
+                        "Reschedule";
+
+
+
+
+
+                    rescheduleBtn.className =
+
+                        "action-btn reschedule";
+
+
+
+
+
+                    rescheduleBtn.onclick =
+
+                        function() {
+
+
+
+                            rescheduleAppointment(
+
+                                appointment.id
+
+                            );
+
+
+
+                        };
+
+
+
+
+
+                    /* Cancel Button */
+
+
+
+                    const cancelBtn =
+
+                        document.createElement(
+
+                            "button"
+
+                        );
+
+
+
+
+
+                    cancelBtn.textContent =
+
+                        "Cancel";
+
+
+
+
+
+                    cancelBtn.className =
+
+                        "action-btn cancel";
+
+
+
+
+
+                    cancelBtn.onclick =
+
+                        function() {
+
+
+
+                            cancelAppointment(
+
+                                appointment.id
+
+                            );
+
+
+
+                        };
+
+
+
+
+
+                    card.appendChild(
+
+                        rescheduleBtn
+
+                    );
+
+
+
+
+
+                    card.appendChild(
+
+                        cancelBtn
+
+                    );
+
+
+
+
+
+                    /* Reminder */
+
+
+
+                    const hoursLeft =
+
+                        (
+
+                            appointmentDate - now
+
+                        ) /
+
+                        (1000 * 60 * 60);
+
+
+
+
+
+                    if (
+
+                        hoursLeft <= 24 &&
+
+                        hoursLeft > 0
+
+                    ) {
+
+
+
+                        const reminder =
+
+                            document.createElement(
+
+                                "p"
+
+                            );
+
+
+
+
+
+                        reminder.className =
+
+                            "status";
+
+
+
+
+
+                        reminder.textContent =
+
+                            "Reminder: Your appointment " +
+
+                            "is within 24 hours!";
+
+
+
+
+
+                        card.appendChild(
+
+                            reminder
+
+                        );
+
+
+
+                    }
+
+
+
+
+
+                    upcomingList.appendChild(
+
+                        card
+
+                    );
+
+
+
+                }
+
+
+
+
+
+                /* =====================================
+
+                   PREVIOUS APPOINTMENTS
+
+                ===================================== */
+
+
+
+                else {
+
+
+
+                    previousList.appendChild(
+
+                        card
+
+                    );
+
+
+
+                }
+
+
+
+            }
+
+        );
+
+
+
+
+
+        /* Empty upcoming message */
+
+
+
+        if (
+
+            upcomingList.innerHTML === ""
+
+        ) {
+
+
+
+            upcomingList.innerHTML =
+
+                "<p class='empty'>" +
+
+                "No upcoming appointments." +
+
+                "</p>";
+
+
+
+        }
+
+
+
+
+
+        /* Empty previous message */
+
+
+
+        if (
+
+            previousList.innerHTML === ""
+
+        ) {
+
+
+
+            previousList.innerHTML =
+
+                "<p class='empty'>" +
+
+                "No previous appointments." +
+
+                "</p>";
+
+
+
+        }
+
+
+
+
+
+        saveAppointments();
+
+
+
+    }
+
+
+
+
+
+    /* =================================================
+
+       RESCHEDULE APPOINTMENT
+
+    ================================================= */
+
+
+
+    function rescheduleAppointment(id) {
+
+
+
+        const appointment =
+
+            appointments.find(
+
+                a => a.id === id
+
+            );
+
+
+
+
+
+        const newDate =
+
+            prompt(
+
+                "Enter new date (YYYY-MM-DD):",
+
+                appointment.date
+
+            );
+
+
+
+
+
+        if (!appointment) return;
+
+        if (currentUser && currentUser.role !== "admin" &&
+            appointment.userId !== currentUser.username) {
+            alert("You cannot modify this appointment.");
+            return;
+        }
+
+        if (!newDate) return;
+
+
+
+
+
+        const newTime =
+
+            prompt(
+
+                "Enter new time (HH:MM):",
+
+                appointment.time
+
+            );
+
+
+
+
+
+        if (!newTime) return;
+
+
+
+
+
+        /* Validate date and time */
+
+
+
+        if (
+
+            !/^\d{4}-\d{2}-\d{2}$/.test(
+
+                newDate
+
+            ) ||
+
+
+
+            !/^\d{2}:\d{2}$/.test(
+
+                newTime
+
+            )
+
+        ) {
+
+
+
+            alert(
+
+                "Please enter a valid date and time."
+
+            );
+
+
+
+            return;
+
+
+
+        }
+
+
+
+
+
+        const updatedDate =
+
+            new Date(
+
+                newDate +
+
+                "T" +
+
+                newTime
+
+            );
+
+
+
+
+
+        if (
+
+            isNaN(updatedDate.getTime()) ||
+
+            updatedDate <= new Date()
+
+        ) {
+
+
+
+            alert(
+
+                "Please select a valid future date and time."
+
+            );
+
+
+
+            return;
+
+
+
+        }
+
+
+
+
+
+        /* Check doctor availability */
+
+
+
+        const conflict =
+
+            appointments.some(a =>
+
+
+
+                a.id !== id &&
+
+                a.doctor === appointment.doctor &&
+
+                a.date === newDate &&
+
+                a.time === newTime &&
+
+                a.status === "Booked"
+
+
+
+            );
+
+
+
+
+
+        if (conflict) {
+
+
+
+            alert(
+
+                "Doctor is already booked at this time."
+
+            );
+
+
+
+            return;
+
+
+
+        }
+
+
+
+
+
+        appointment.date =
+
+            newDate;
+
+
+
+
+
+        appointment.time =
+
+            newTime;
+
+
+
+
+
+        saveAppointments();
+
+
+
+
+
+        displayAppointments();
+
+
+
+
+
+        alert(
+
+            "Appointment rescheduled successfully!"
+
+        );
+
+
+
+    }
+
+
+
+
+
+    /* =================================================
+
+       CANCEL APPOINTMENT
+
+    ================================================= */
+
+
+
+    function cancelAppointment(id) {
+
+        const appointment = appointments.find(a => a.id === id);
+        if (!appointment) return;
+
+        if (currentUser && currentUser.role !== "admin" &&
+            appointment.userId !== currentUser.username) {
+            alert("You cannot cancel this appointment.");
+            return;
+        }
+const confirmCancel =
+
+            confirm(
+
+                "Are you sure you want to cancel this appointment?"
+
+            );
+
+
+
+
+
+        if (!confirmCancel) return;
+
+
+
+
+
+        appointments =
+
+            appointments.filter(
+
+                a => a.id !== id
+
+            );
+
+
+
+
+
+        saveAppointments();
+
+
+
+
+
+        displayAppointments();
+
+
+
+
+
+        alert(
+
+            "Appointment cancelled successfully!"
+
+        );
+
+
+
+    }
+
+
+
+
+
+    /* =================================================
+
+       LOAD APPOINTMENTS
+
+       WHEN PAGE OPENS
+
+    ================================================= */
+
+
+
+    displayAppointments();
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
